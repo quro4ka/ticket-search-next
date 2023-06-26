@@ -1,11 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-import styles from './Header.module.scss'
+import basketSvg from './../../../public/icons/basket.svg'
 import { Button } from '../button/page'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { selectCartModule } from '@/redux/features/cart/selector'
+import styles from './Header.module.scss'
 
 export const Header = () => {
   const products = useSelector((state) => selectCartModule(state))
@@ -32,7 +33,7 @@ export const Header = () => {
               </Link>
             )}
             <Link href="/cart">
-              <Image src="./icons/basket.svg" width={32} height={32} alt="basket" />
+              <Image src={basketSvg} width={32} height={32} alt="basket" />
             </Link>
           </div>
         </div>
