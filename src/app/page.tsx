@@ -1,95 +1,64 @@
-import Image from 'next/image'
+'use client'
+
+import { Button } from '@/ui/button/page'
+import { Accordion } from '@/ui/accordion/page'
+import { Counter } from '@/ui/counter/page'
+import { FilmItem } from '@/ui/filmItem/page'
+import { useGetMoviesQuery } from '@/redux/services/movieApi'
 import styles from './page.module.css'
+import { DropDown } from '@/ui/Dropdown/page'
+import { useEffect, useState } from 'react'
+import { Input } from '@/ui/input/page'
 
+let genres: string[] = ['Не выбран']
 export default function Home() {
+  const { data, isLoading, error } = useGetMoviesQuery()
+  const [searchName, setSearchName] = useState('')
+
+  if (isLoading) {
+    return <h1>Loading</h1>
+  }
+
+  if (!data || error) {
+    return <h1>Not found</h1>
+  }
+
+  if (data) {
+    for (let i = 0; i < data.length; i++) {
+      genres.push(data[i].genre)
+    }
+
+    genres = [...new Set(genres)]
+
+    // console.log('genres', genres)
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="container">
+      <main className={styles.main}>
+        <aside className={styles.aside}>
+          <div className={styles.wrapper}>
+            <div className={styles.filters}>
+              <Input
+                value={searchName}
+                onChange={(e: any) => setSearchName(e.target.value)}
+                style={{ marginBottom: 20 }}
+                title="Название"
+                placeholder="Введите название"
+              />
+              <DropDown list={genres} defaultTitle="Жанр" />
+              <DropDown list={genres} defaultTitle="Жанр" />
+            </div>
+          </div>
+        </aside>
+        <div className={styles.film__items}>
+          {data
+            .filter((value: any) => value.title.toLowerCase().includes(searchName))
+            .map((item: any) => (
+              <FilmItem item={item} key={item.id} />
+            ))}
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      </main>
+    </div>
   )
 }

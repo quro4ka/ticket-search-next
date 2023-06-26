@@ -1,0 +1,51 @@
+.item {
+    width: 100%;
+    // position: relative;
+    display: flex;
+    justify-content: space-between;
+    // align-items: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 22px;
+    margin-bottom: 16px;
+}
+
+.left {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    // align-items: center;
+}
+.right {
+    // position: absolute;
+    // right: 24px;
+}
+
+.content {
+    // gap: 40px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.genre {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.avatar {
+    width: 100px;
+    height: 120px;
+    gap: 50px;
+    background-color: rgb(228, 228, 228);
+    border-radius: 8px;
+    img {
+        border-radius: 8px;
+        height: 100%;
+        width: 100%;
+    }
+}

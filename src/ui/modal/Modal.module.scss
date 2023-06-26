@@ -1,0 +1,45 @@
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #0000005d;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    &__title {
+        font-weight: 700;
+        font-size: 20px;
+    }
+}
+
+.content {
+    margin-bottom: 20px;
+}
+
+.text {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.btns {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
